@@ -5,11 +5,17 @@ import { NoContentComponent } from './no-content';
 
 import { DataResolver } from './app.resolver';
 
+/**
+ * mQuBits
+ */
+import { RegisterComponent } from './users/register/register.component';
+
 export const ROUTES: Routes = [
-  { path: '',      component: HomeComponent },
-  { path: 'home',  component: HomeComponent },
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'detail', loadChildren: './+detail#DetailModule'},
-  { path: 'barrel', loadChildren: './+barrel#BarrelModule'},
-  { path: '**',    component: NoContentComponent },
+  { path: 'detail', loadChildren: './+detail#DetailModule' },
+  { path: 'barrel', loadChildren: './+barrel#BarrelModule' },
+  { path: 'users/register', component: RegisterComponent },
+  { path: '**', component: NoContentComponent },
 ];
