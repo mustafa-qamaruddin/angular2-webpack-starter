@@ -8,7 +8,7 @@ import { DataResolver } from './app.resolver';
 /**
  * mQuBits
  */
-import { RegisterComponent } from './users/register/register.component';
+import { RegisterComponent } from './mQuBits/components/users/register/register.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
