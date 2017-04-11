@@ -38,11 +38,18 @@ export class OAuthService {
             .map(
             (response: Response) => {
                 localStorage.setItem('token', response.json().access_token);
+                localStorage.setItem('token_ttl', response.json().expires_in);
+                localStorage.setItem('token_timestamp', (String)(Math.round(new Date().getTime()/1000)));
             }
             );
     }
 
     public getAccessToken(): Observable<any> {
+        let token_ttl = parseInt(localStorage.getItem('token_ttl'));
+        let token_timestamp = parseInt(localStorage.getItem('token_timestamp')));
+        if (Math.round(new Date().getTime()/1000) - token_timestamp > token_ttl ){
+            localStorage.removeItem('token');
+        }
         let token = localStorage.getItem('token');
         if (!token || token == 'undefined' || token == undefined) {
             return this.authenticate().map((dummy) => (localStorage.getItem('token')) );

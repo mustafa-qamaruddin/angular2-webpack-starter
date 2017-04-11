@@ -5,38 +5,56 @@
         <label class="center-block">E-mail* :
         <input class="form-control" formControlName="email">
     </label>
+        <div *ngIf="formErrors.email" class="alert alert-danger">
+            {{ formErrors.email }}
+        </div>
     </div>
 
     <div class="form-group">
         <label class="center-block">Password* :
         <input class="form-control" formControlName="password">
     </label>
+        <div *ngIf="formErrors.password" class="alert alert-danger">
+            {{ formErrors.password }}
+        </div>
     </div>
 
     <div class="form-group">
         <label class="center-block">Name :
         <input class="form-control" formControlName="name">
     </label>
+        <div *ngIf="formErrors.name" class="alert alert-danger">
+            {{ formErrors.name }}
+        </div>
     </div>
 
     <div class="form-group">
         <label class="center-block">Mobile :
         <input class="form-control" formControlName="mobile">
     </label>
+        <div *ngIf="formErrors.mobile" class="alert alert-danger">
+            {{ formErrors.mobile }}
+        </div>
     </div>
 
     <div class="form-group">
         <label class="center-block">Age :
         <input class="form-control" formControlName="age">
     </label>
+        <div *ngIf="formErrors.age" class="alert alert-danger">
+            {{ formErrors.age }}
+        </div>
     </div>
 
     <div class="form-group">
         <label class="center-block">Gender :
-      <select class="form-control" formControlName="gender">
+      <select class="form-control" formControlName="gender" [ngClass]="{'has-error':!registrationForm.controls['gender'].valid}" >
           <option *ngFor="let mqg of genders" [value]="mqg">{{mqg}}</option>
       </select>
     </label>
+        <div *ngIf="formErrors.gender" class="alert alert-danger">
+            {{ formErrors.gender }}
+        </div>
     </div>
 
     <div class="form-group">
@@ -49,4 +67,4 @@
 <p>Form value: {{ registrationForm.value | json }}</p>
 <p>Form status: {{ registrationForm.status | json }}</p>
 <p>Server Response: {{ user | json }}</p>
-<p>Server Error: {{ error | json }}</p>
+<p>Server Error: {{ formErrors | json }}</p>

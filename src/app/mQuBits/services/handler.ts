@@ -14,7 +14,6 @@ export class Handler {
         let errMsg: string;
         if (error instanceof Response) {
             if (error.status == 400) {
-                console.log(error.json().message);
                 errMsg = error.json().message;
             } else {
                 const body = error.json() || '';

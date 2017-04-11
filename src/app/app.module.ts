@@ -39,6 +39,7 @@ import '../styles/headings.css';
 import { RegisterComponent } from './mQuBits/components/users/register/register.component';
 import { OAuthService } from './mQuBits/services/oauth/o-auth.service';
 import { Handler } from './mQuBits/services/handler';
+import { ProfileComponent } from './mQuBits/components/users/profile/profile.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -63,7 +64,8 @@ type StoreType = {
     HomeComponent,
     NoContentComponent,
     XLargeDirective,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,

@@ -28,14 +28,6 @@ import { AppState } from './app.service';
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Home
       </a>
-      <a [routerLink]=" ['./detail'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Detail
-      </a>
-      <a [routerLink]=" ['./barrel'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Barrel
-      </a>
       <a [routerLink]=" ['./about'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         About
@@ -44,13 +36,15 @@ import { AppState } from './app.service';
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Register
       </a>
+      <a [routerLink]=" ['./users/profile'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        Profile
+      </a>
     </nav>
 
     <main>
       <router-outlet></router-outlet>
     </main>
-
-    <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
 
     <footer>
       <span>GOPRO by <a [href]="url">mQuBits</a></span>
@@ -63,7 +57,7 @@ import { AppState } from './app.service';
   `
 })
 export class AppComponent implements OnInit {
-  public angularclassLogo = '';
+  public angularclassLogo = 'http://www.mqubits.com/assets/images/logo.png';
   public name = 'mQuBits';
   public url = 'http://mQuBits.com';
 
@@ -72,7 +66,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+
   }
 
 }

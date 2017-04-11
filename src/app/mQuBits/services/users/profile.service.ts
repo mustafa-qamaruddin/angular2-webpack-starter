@@ -14,9 +14,9 @@ import { Config } from './../../environments/config';
 import { Handler } from './../handler';
 
 @Injectable()
-export class RegisterService {
+export class ProfileService {
     private baseUrl;
-    private endpoint = 'auth/register';
+    private endpoint = 'users/';
 
     constructor(
         private http: Http,
@@ -26,13 +26,13 @@ export class RegisterService {
         this.baseUrl = Config.get('baseURL');
     }
 
-    public register(user: User): Observable<User> {
+    public show(id: Number): Observable<User> {
         return this.oauthService.getAccessToken()
-            .flatMap((data) => (this.aux(user, data)))
+            .flatMap((data) => (this.aux(id, data)))
             .catch(this.handler.render);
     }
 
-    public aux(user: User, accessToken: String): Observable<User> {
+    public aux(id: Number, accessToken: String): Observable<User> {
         let objHeaders = new Headers({
             'Content-Type': 'application/json',
             'Accept': 'application/vnd.rest.v1+json',
@@ -41,9 +41,8 @@ export class RegisterService {
         let options = new RequestOptions({
             headers: objHeaders
         });
-        let body = JSON.stringify(user);
         return this.http
-            .post(this.baseUrl + this.endpoint, body, options)
+            .get(this.baseUrl + this.endpoint + id, options)
             .map((response: Response) => (response.json().message.user as User));
     }
 }

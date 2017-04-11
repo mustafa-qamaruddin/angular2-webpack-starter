@@ -11,6 +11,7 @@ import { genders } from './../../../models/user.model';
 import { RegisterService } from './../../../services/auth/register.service';
 import { User } from './../../../models/user.model';
 import { Config } from './../../../environments/config';
+import { Router }  from '@angular/router';
 
 @Component({
   selector: 'register',
@@ -20,8 +21,14 @@ import { Config } from './../../../environments/config';
 })
 export class RegisterComponent implements OnInit {
   public genders: String[] = genders;
-  public user: User;
-  public error: any;
+  public formErrors = {
+    email: '',
+    password: '',
+    name: '',
+    mobile: '',
+    age: '',
+    gender: ''
+  };
 
   /**
    * Form Controls
@@ -32,6 +39,7 @@ export class RegisterComponent implements OnInit {
     public route: ActivatedRoute,
     private registerService: RegisterService,
     private fb: FormBuilder,
+    private router: Router,
   ) {
 
   }
@@ -42,13 +50,26 @@ export class RegisterComponent implements OnInit {
 
   public createForm() {
     this.registrationForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      name: '',
-      mobile: '',
-      age: '',
-      gender: ''
+      email: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      name: ['', Validators.compose([Validators.minLength(6)])],
+      mobile: ['', Validators.compose([Validators.minLength(7), Validators.maxLength(14), Validators.required])],
+      age: ['', Validators.compose([Validators.required])],
+      gender: ['', Validators.compose([Validators.required])]
     });
+
+    this.registrationForm.valueChanges.subscribe((data) => (this.onValueChanged(data)));
+
+    this.onValueChanged();
+  }
+
+  public onValueChanged(data?: any) {
+    if (!this.registrationForm) {
+      return;
+    }
+    for(let key in this.formErrors){
+      this.formErrors[key] = '';
+    }
   }
 
   public prepareUser(formValue: any): User {
@@ -69,11 +90,11 @@ export class RegisterComponent implements OnInit {
     let params: User = this.prepareUser(this.registrationForm.value);
     this.registerService.register(params).subscribe(
       (data) => {
-        this.user = data;
+        localStorage.setItem('currentUser', (String)(data.id));
+        this.router.navigate(['users/profile']);
       },
-      (error) => {
-        console.log(error);
-        this.error = error;
+      (errors) => {
+        this.formErrors = errors;
       }
     );
   }
