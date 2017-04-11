@@ -32,6 +32,10 @@ import { AppState } from './app.service';
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         About
       </a>
+      <a [routerLink]=" ['./users/login'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        Login
+      </a>
       <a [routerLink]=" ['./users/register'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Register

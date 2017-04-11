@@ -1,0 +1,32 @@
+<h2>Login Form</h2>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+        <label class="center-block">E-mail* :
+        <input class="form-control" formControlName="email">
+    </label>
+        <div *ngIf="formErrors.email" class="alert alert-danger">
+            {{ formErrors.email }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="center-block">Password* :
+        <input class="form-control" formControlName="password">
+    </label>
+        <div *ngIf="formErrors.password" class="alert alert-danger">
+            {{ formErrors.password }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Login</button>
+    </div>
+
+</form>
+
+<h1>Debug Mode:</h1>
+<p>Form value: {{ loginForm.value | json }}</p>
+<p>Form status: {{ loginForm.status | json }}</p>
+<p>Server Response: {{ user | json }}</p>
+<p>Server Error: {{ formErrors | json }}</p>

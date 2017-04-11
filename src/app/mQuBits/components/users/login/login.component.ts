@@ -8,36 +8,32 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { genders } from './../../../models/user.model';
-import { RegisterService } from './../../../services/auth/register.service';
+import { LoginService } from './../../../services/auth/login.service';
 import { User } from './../../../models/user.model';
 import { Config } from './../../../environments/config';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'register',
-  styleUrls: ['./register.component.css'],
-  templateUrl: './register.component.html',
-  providers: [RegisterService],
+  selector: 'login',
+  styleUrls: ['./login.component.css'],
+  templateUrl: './login.component.html',
+  providers: [LoginService],
 })
-export class RegisterComponent implements OnInit {
-  public genders: String[] = genders;
+export class LoginComponent implements OnInit {
+
   public formErrors = {
     email: '',
-    password: '',
-    name: '',
-    mobile: '',
-    age: '',
-    gender: ''
+    password: ''
   };
 
   /**
    * Form Controls
    */
-  public registrationForm: FormGroup;
+  public loginForm: FormGroup;
 
   constructor(
     public route: ActivatedRoute,
-    private registerService: RegisterService,
+    private loginService: LoginService,
     private fb: FormBuilder,
     private router: Router,
   ) {
@@ -49,22 +45,18 @@ export class RegisterComponent implements OnInit {
   }
 
   public createForm() {
-    this.registrationForm = this.fb.group({
+    this.loginForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-      name: ['', Validators.compose([Validators.minLength(6)])],
-      mobile: ['', Validators.compose([Validators.minLength(7), Validators.maxLength(14), Validators.required])],
-      age: ['', Validators.compose([Validators.required])],
-      gender: ['', Validators.compose([Validators.required])]
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
     });
 
-    this.registrationForm.valueChanges.subscribe((data) => (this.onValueChanged(data)));
+    this.loginForm.valueChanges.subscribe((data) => (this.onValueChanged(data)));
 
     this.onValueChanged();
   }
 
   public onValueChanged(data?: any) {
-    if (!this.registrationForm) {
+    if (!this.loginForm) {
       return;
     }
     for (let key in this.formErrors) {
@@ -79,19 +71,19 @@ export class RegisterComponent implements OnInit {
     let ret: User = new User(
       0,
       formValue.email,
-      formValue.mobile,
+      '',
       formValue.password,
       Config.get('PremiseID'),
-      formValue.age,
-      formValue.gender,
-      formValue.name,
+      0,
+      '',
+      ''
     );
     return ret;
   }
 
   public onSubmit() {
-    let params: User = this.prepareUser(this.registrationForm.value);
-    this.registerService.register(params).subscribe(
+    let params: User = this.prepareUser(this.loginForm.value);
+    this.loginService.login(params).subscribe(
       (data) => {
         localStorage.setItem('currentUser', (String)(data.id));
         this.router.navigate(['users/profile']);

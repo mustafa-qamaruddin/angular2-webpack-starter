@@ -10,6 +10,7 @@ import { DataResolver } from './app.resolver';
  */
 import { RegisterComponent } from './mQuBits/components/users/register/register.component';
 import { ProfileComponent } from './mQuBits/components/users/profile/profile.component';
+import { LoginComponent } from './mQuBits/components/users/login/login.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
@@ -17,5 +18,6 @@ export const ROUTES: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'users/register', component: RegisterComponent },
   { path: 'users/profile', component: ProfileComponent },
+  { path: 'users/login', component: LoginComponent },
   { path: '**', component: NoContentComponent },
 ];

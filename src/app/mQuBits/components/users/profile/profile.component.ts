@@ -10,7 +10,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { genders } from './../../../models/user.model';
 import { User } from './../../../models/user.model';
 import { Config } from './../../../environments/config';
-import {ProfileService} from './../../../services/users/profile.service';
+import { ProfileService } from './../../../services/users/profile.service';
 
 @Component({
   selector: 'profile',
@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public ngOnInit() {
-    let id = parseInt(localStorage.getItem('currentUser'));
+    let id = parseInt(localStorage.getItem('currentUser'), 10);
     this.profileService.show(id).subscribe(
       (data) => {
         this.user = data;

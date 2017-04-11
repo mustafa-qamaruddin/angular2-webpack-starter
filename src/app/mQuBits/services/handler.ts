@@ -13,7 +13,7 @@ export class Handler {
     public render(error: Response | any): Observable<any> {
         let errMsg: string;
         if (error instanceof Response) {
-            if (error.status == 400) {
+            if (error.status === 400) {
                 errMsg = error.json().message;
             } else {
                 const body = error.json() || '';

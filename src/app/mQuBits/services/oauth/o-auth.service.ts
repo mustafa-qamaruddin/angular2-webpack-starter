@@ -39,20 +39,20 @@ export class OAuthService {
             (response: Response) => {
                 localStorage.setItem('token', response.json().access_token);
                 localStorage.setItem('token_ttl', response.json().expires_in);
-                localStorage.setItem('token_timestamp', (String)(Math.round(new Date().getTime()/1000)));
+                localStorage.setItem('token_timestamp', (String)(Math.round(new Date().getTime() / 1000)));
             }
             );
     }
 
     public getAccessToken(): Observable<any> {
-        let token_ttl = parseInt(localStorage.getItem('token_ttl'));
-        let token_timestamp = parseInt(localStorage.getItem('token_timestamp')));
-        if (Math.round(new Date().getTime()/1000) - token_timestamp > token_ttl ){
+        let tokenTTL = parseInt(localStorage.getItem('token_ttl'), 10);
+        let tokenTimestamp = parseInt(localStorage.getItem('token_timestamp'), 10);
+        if (Math.round(new Date().getTime() / 1000) - tokenTimestamp > tokenTTL) {
             localStorage.removeItem('token');
         }
         let token = localStorage.getItem('token');
-        if (!token || token == 'undefined' || token == undefined) {
-            return this.authenticate().map((dummy) => (localStorage.getItem('token')) );
+        if (!token || token === 'undefined' || token === undefined) {
+            return this.authenticate().map((dummy) => (localStorage.getItem('token')));
         } else {
             return Observable.of(token);
         }
